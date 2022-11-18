@@ -11,9 +11,9 @@ public class FamilyTree
     
     private static class TreeNode
     {
-        private String                    name;
-        private TreeNode                parent;
-        private ArrayList<TreeNode>        children;
+        private String name;
+        private TreeNode parent;
+        private ArrayList<TreeNode> children;
         
         
         TreeNode(String name)
@@ -31,8 +31,10 @@ public class FamilyTree
         
         void addChild(TreeNode childNode)
         {
-            // Add childNode to this node's children list. Also
+            // Add childNode to this node's children list. 
             // set childNode's parent to this node.
+        	this.children.add(childNode);
+        	childNode.parent = this;
         }
         
         
@@ -41,7 +43,7 @@ public class FamilyTree
         TreeNode getNodeWithName(String targetName)
         {
             // Does this node have the target name?
-            if (?????)
+            if (this.getName() == targetName)
                 return this;
                     
             // No, recurse. Check all children of this node.
@@ -49,6 +51,10 @@ public class FamilyTree
             {
                 // If child.getNodeWithName(targetName) returns a non-null node,
                 // then that's the node we're looking for. Return it.
+            	if (child.getNodeWithName(targetName) != null)
+            	{
+            		return child;
+            	}
             }
             
             // Not found anywhere.
@@ -66,6 +72,11 @@ public class FamilyTree
             // the nodes of a tree is like traversing a linked list. If that isn’t clear,
             // draw a tree, mark any leaf node, and then mark its ancestors in order from
             // recent to ancient. Expect a question about this on the final exam.
+            while (this.parent != null)
+            {
+            	ancestors.add(this.parent);
+            	this.parent.collectAncestorsToList();
+            }
 
             return ancestors;
         }
